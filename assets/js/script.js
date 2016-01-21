@@ -14,39 +14,26 @@ function drawScreen(sigName, sigTitle, sigAddress, sigPhone){
     context.fillStyle = "#000000";
     context.textAlign = "left";
     context.fillText(sigName, leftAlign, 16);
-    checkWidth(context.measureText(sigName).width);
 
     context.font = "16px  sans-serif";
     context.fillText(sigTitle, leftAlign, 36);
-    checkWidth(context.measureText(sigTitle).width);
 
     context.font = "14px sans-serif";
-    context.fillText(sigAddress, leftAlign, 54);
-    checkWidth(context.measureText(sigAddress).width);
+    if(sigAddress != ''){
+      context.fillText(sigAddress, leftAlign, 54);
+    }
 
     context.fillText(sigPhone, leftAlign, 70);
-    checkWidth(context.measureText(sigPhone).width);
   }
 }
 
 function textInputChanged(e){
   sigName = document.querySelector('.signame').value;
   sigTitle = document.querySelector('.sigtitle').value;
-  sigAddress = document.querySelector('.sigaddress').value + ', ' + document.querySelector('.sigcity').value;
+  sigAddress = document.querySelector('.sigaddress').value;
   sigPhone = document.querySelector('.sigphone').value + ' ext. ' + document.querySelector('.sigext').value + ' | pchc.com';
 
   drawScreen(sigName, sigTitle, sigAddress, sigPhone);
-}
-
-function checkWidth(theWidth){
-  if(theWidth > textWidth){
-    textWidth = theWidth;
-  }
-}
-
-function setWidth(){
-  console.log(canvasWidth);
-  //drawingCanvas.width = leftAlign + textWidth;
 }
 
 function downloadCanvas(link, canvasId, filename) {
@@ -59,22 +46,30 @@ function downloadCanvas(link, canvasId, filename) {
  * parameter (=the link element), ID of the canvas and a filename.
 */
 document.getElementById('download').addEventListener('click', function() {
-  downloadCanvas(this, 'signaturecanvas', 'test.png');
+  downloadCanvas(this, 'signaturecanvas', 'pchc-signature_'+makeid()+'.png');
 }, false);
+
+function makeid(){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
 
 var drawingCanvas = document.getElementById('signaturecanvas');
 var downloadLink = document.querySelector('.download');
 
 var leftAlign = 140;
-var canvasWidth = drawingCanvas.width;
-var textWidth = 0;
 
 var sigName = 'Firstname Lastname';
 var sigTitle = 'Title';
 var sigAddress = '103 Maine Ave., Bangor, ME  04401';
 var sigPhone = '207-992-9200 ext. 1234 | pchc.com';
 
-drawScreen(sigName, sigTitle, sigAddress, sigPhone);
-
 var generateButton = document.querySelector(".button");
 generateButton.addEventListener('click', textInputChanged, false);
+
+drawScreen(sigName, sigTitle, sigAddress, sigPhone);
