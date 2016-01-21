@@ -5,7 +5,7 @@ function drawScreen(sigName, sigTitle, sigAddress, sigPhone){
     context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
 
     var pchcLogo = new Image();
-    pchcLogo.src = "assets/img/pchc-signature-140x85.png";
+    pchcLogo.src = "assets/img/pchc-signature-140X85.png";
     pchcLogo.onload = function() {
       context.drawImage(pchcLogo, 0, 0);
     }
