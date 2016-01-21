@@ -5,7 +5,7 @@ function drawScreen(sigName, sigTitle, sigAddress, sigPhone){
     context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
 
     var pchcLogo = new Image();
-    pchcLogo.src = "assets/img/pchc-signature_140x85.png";
+    pchcLogo.src = "assets/img/pchc-signature-140x85.png";
     pchcLogo.onload = function() {
       context.drawImage(pchcLogo, 0, 0);
     }
@@ -15,15 +15,19 @@ function drawScreen(sigName, sigTitle, sigAddress, sigPhone){
     context.textAlign = "left";
     context.fillText(sigName, leftAlign, 16);
 
-    context.font = "16px  sans-serif";
-    context.fillText(sigTitle, leftAlign, 36);
+    if(sigTitle != ''){
+      context.font = "16px  sans-serif";
+      context.fillText(sigTitle, leftAlign, 36);
+    }
 
     context.font = "14px sans-serif";
     if(sigAddress != ''){
       context.fillText(sigAddress, leftAlign, 54);
     }
 
-    context.fillText(sigPhone, leftAlign, 70);
+    if(sigPhone != ''){
+      context.fillText(sigPhone, leftAlign, 70);
+    }
   }
 }
 
