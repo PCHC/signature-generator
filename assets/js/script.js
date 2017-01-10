@@ -1,4 +1,4 @@
-function drawScreen(sigName, sigTitle, sigAddress, sigPhone){
+function drawScreen(sigName, sigTitle, sigAddress, sigPhone, sigWeb){
   if(drawingCanvas.getContext){
     var context = drawingCanvas.getContext('2d');
 
@@ -7,26 +7,35 @@ function drawScreen(sigName, sigTitle, sigAddress, sigPhone){
     var pchcLogo = new Image();
     pchcLogo.src = "assets/img/pchc-signature-140X85.png";
     pchcLogo.onload = function() {
-      context.drawImage(pchcLogo, 0, 0);
+      context.drawImage(pchcLogo, 0, 3);
     }
 
     context.font = "bold 16px sans-serif";
     context.fillStyle = "#000000";
     context.textAlign = "left";
-    context.fillText(sigName, leftAlign, 16);
+    var textPos = 14;
+    context.fillText(sigName, leftAlign, textPos);
 
     if(sigTitle != ''){
+      textPos+=16;
       context.font = "16px  sans-serif";
-      context.fillText(sigTitle, leftAlign, 36);
+      context.fillText(sigTitle, leftAlign, textPos);
     }
 
     context.font = "14px sans-serif";
     if(sigAddress != ''){
-      context.fillText(sigAddress, leftAlign, 54);
+      textPos+=16;
+      context.fillText(sigAddress, leftAlign, textPos);
     }
 
     if(sigPhone != ''){
-      context.fillText(sigPhone, leftAlign, 70);
+      textPos+=16;
+      context.fillText(sigPhone, leftAlign, textPos);
+    }
+
+    if(sigWeb != ''){
+      textPos+=16;
+      context.fillText(sigWeb, leftAlign, textPos);
     }
   }
 }
@@ -35,9 +44,11 @@ function textInputChanged(e){
   sigName = document.querySelector('.signame').value;
   sigTitle = document.querySelector('.sigtitle').value;
   sigAddress = document.querySelector('.sigaddress').value;
-  sigPhone = document.querySelector('.sigphone').value + ' ext. ' + document.querySelector('.sigext').value + ' | pchc.com';
 
-  drawScreen(sigName, sigTitle, sigAddress, sigPhone);
+  sigFax = (document.querySelector('.sigfax').checked) ? ' | Fax: 207-907-7078' : '';
+  sigPhone = document.querySelector('.sigphone').value + ' ext. ' + document.querySelector('.sigext').value  + sigFax;
+
+  drawScreen(sigName, sigTitle, sigAddress, sigPhone, sigWeb);
 }
 
 function downloadCanvas(link, canvasId, filename) {
@@ -71,9 +82,10 @@ var leftAlign = 140;
 var sigName = 'Firstname Lastname';
 var sigTitle = 'Title';
 var sigAddress = '103 Maine Ave., Bangor, ME  04401';
-var sigPhone = '207-992-9200 ext. 1234 | pchc.com';
+var sigPhone = '207-992-9200 ext. 1234 | Fax: 207-907-7078';
+var sigWeb = 'pchc.com';
 
 var generateButton = document.querySelector(".button");
 generateButton.addEventListener('click', textInputChanged, false);
 
-drawScreen(sigName, sigTitle, sigAddress, sigPhone);
+drawScreen(sigName, sigTitle, sigAddress, sigPhone, sigWeb);
